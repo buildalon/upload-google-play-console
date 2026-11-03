@@ -1,35 +1,38 @@
 {
-  "name": "github-action-template",
+  "name": "upload-google-play-console",
   "version": "2.0.0",
-  "description": "A GitHub Actions template repository for TypeScript based Actions.",
-  "author": "RageAgainstThePixel",
+  "description": "A Github action to upload abb/apk and build metadata artifacts to the Google Play Console",
+  "author": "Buildalon",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RageAgainstThePixel/github-action-template.git"
+    "url": "git+https://github.com/buildalon/upload-google-play-console.git"
   },
   "bugs": {
-    "url": "https://github.com/RageAgainstThePixel/github-action-template/issues"
+    "url": "https://github.com/buildalon/upload-google-play-console/issues"
   },
-  "homepage": "https://github.com/RageAgainstThePixel/github-action-template",
+  "homepage": "https://github.com/buildalon/upload-google-play-console",
   "main": "dist/index.js",
-  "engines": {
-    "node": ">=24"
-  },
   "keywords": [],
   "dependencies": {
-    "@actions/core": "^3.0.1"
+    "@actions/core": "^3.0.1",
+    "@actions/exec": "^3.0.0",
+    "@actions/github": "^9.1.1",
+    "@actions/io": "^3.0.2",
+    "@actions/tool-cache": "^4.0.0",
+    "@googleapis/androidpublisher": "^42.2.0",
+    "glob": "^14.0.3"
   },
   "devDependencies": {
-    "@types/node": "^24.12.2",
-    "esbuild": "^0.28.2",
+    "@types/node": "^24.19.2",
+    "@vercel/ncc": "^0.45.0",
     "shx": "^0.4.0",
-    "typescript": "^7.0.2"
+    "typescript": "^6.0.3"
   },
   "scripts": {
     "build": "npm run clean && npm run bundle",
-    "bundle": "esbuild src/index.ts --bundle --platform=node --target=node24 --format=cjs --outfile=dist/index.js --sourcemap --log-level=warning",
+    "bundle": "ncc build src/index.ts -o dist --source-map --license licenses.txt",
     "clean": "npm install && shx rm -rf dist/ out/ node_modules/ && npm ci",
-    "typecheck": "tsc --noEmit"
+    "test": "node --test \"tests/**/*.test.mts\""
   }
 }
